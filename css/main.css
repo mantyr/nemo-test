@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+body {
+    background-color:#EBECED;
+    color:#4F4F4F;
+    font-family:Tahoma,Geneva;
+    font-size:11px;
+    font-weight:normal;
+    height:100%;
+    margin:0;
+    padding:0;
+    text-align:left;
+    width:100%;
+}
+form {
+    padding:0px;
+    margin:0px;
+}
+
+form label span {
+    width:58px;
+    display:inline-block;
+    float:left;
+}
+form input, form textarea {
+    width:400px;
+}
+form textarea {
+    height:240px;
+}
+
+.content {
+    width:1000px;
+    margin:0px auto;
+}
+.buttons {
+    margin-bottom:10px;
+}
+.buttons a {
+    font-size: 13px;
+    color:#000000;
+    text-decoration:none;
+    background-color:#CBCBCB;
+    padding:0px 7px 2px;
+    border-radius: 50px;
+}

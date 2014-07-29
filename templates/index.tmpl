@@ -1,0 +1,29 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?=(site::$sub_title ? site::$sub_title.' - ' : '').Config::get('site')['title'];?></title>
+
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+
+    <style media="print"> .no_print{ display:none; } </style>
+
+    <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+</head>
+<BODY>
+<div class="content">
+    <h1><?=Config::get('site')['title'];?></h1>
+    <div class="buttons">
+        <a href="/news/">новости</a>
+        <a href="/news/save">новая новость</a>
+    </div>
+
+    <?=$arg['content']?>
+
+    <script type="text/javascript" src="/js/admin.js"></script>
+</div>
+</BODY>
+</html>

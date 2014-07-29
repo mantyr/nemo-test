@@ -1,0 +1,57 @@
+<?php
+
+    $parent = 'index';
+
+    import('classes.ObjectStorageNews');
+
+    $storage_news = ObjectStorageNews_factory::factory('storage_type', 'news');
+
+    $view = '';
+    $news_id = $arg['param'][0];
+
+    if ($arg['action'] == 'view') {
+        $news = $storage_news->get_news($news_id);
+
+        if (count($news)) {
+            foreach ($news as $new) {
+                $new_title = htmlspecialchars($new['value']['title']);
+                $new_bodytext = '<p>'.str_replace("\r\n", "</p>\r\n<p>", htmlspecialchars($new['value']['bodytext'])).'<p>';
+                $view .= "
+                    <h2>".($new['value']['title'] ? $new_title : 'нет названия')."</h2>
+                    <div class='times'><span>".$new['value']['create_time_view']."</span> / <span>".$new['value']['update_time_view']."</span></div>
+                    <div class='bodytext'>".($new['value']['bodytext'] ? $new_bodytext : '<p>нет содержимого новости</p>')."</div>
+                    <div class='buttons'><a href='/news/".$new['id']."/save'>редактировать</a></div>
+                ";
+            }
+        }
+
+    } elseif ($arg['action'] == 'delete') {
+        $storage_news->delete($news_id);
+        redirect("/news/");
+    } elseif ($arg['action'] == 'save') {
+        if ($news_id) {
+            $news = $storage_news->get($news_id);
+        }
+        if ($_action == 'save') {
+            $news_id = $storage_news->save([
+                'value' => [
+                    'title' => $_title,
+                    'bodytext' => $_bodytext,
+                    'create_time' => $news['value']['create_time'],
+                ],
+                'id' => $news_id,
+            ]);
+            redirect("/news/${news_id}/save");
+        }
+
+        $view = "
+            <form action='/news/".$news_id."/save' method='post'>
+                <input type='hidden' name='action' value='save'>
+                ".($news['id'] ? "<span>".$news['value']['create_time_view']."</span> / <span>".$news['value']['update_time_view']."</span>" : "")."
+                <div><label><span>название</span><input name='title' value='".$news['value']['title']."'></label></div>
+                <div><label><span>новость</span><textarea name='bodytext'>".$news['value']['bodytext']."</textarea></label></div>
+                <div><button>Сохранить</button> <a href='/news/".$news_id."/delete'  style='margin-left:400px;'>удалить</a></div>
+            </form>
+        ";
+    }
+echo $view;
